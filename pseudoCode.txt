@@ -1,8 +1,8 @@
 Ship factory - 
     length method - return lenght of Ship
-    hitNumber - tracking number of history
+    hitNumber - tracking number of hits
     sunk - boolean/ sunked or not
-    hit - increases number of history
+    hit - increases number of hits
     isSunk - calculted 'sunk' based on lenght and number of history
 Gameboard factory - 
     board - matrix of coordinates
