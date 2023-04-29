@@ -1,0 +1,55 @@
+Ship factory - 
+    length method - return lenght of Ship
+    hitNumber - tracking number of history
+    sunk - boolean/ sunked or not
+    hit - increases number of history
+    isSunk - calculted 'sunk' based on lenght and number of history
+Gameboard factory - 
+    board - matrix of coordinates
+    placeShip - (coordinates) - place ship on given coordinates
+    receiveAttack - (coordinates) - determines if attack hit a ship and trigger hit method on hitted ship if any got hit else miss
+    missedAttacks - array of coordinates that already been attacked and missed
+    allSunked - if all ships have been sunk - report back
+Player factory - 
+    turn - boolean 
+    shoot - choose coordinater from avalible to shoot
+
+    Computer factory - 
+        shoot - choose random coordinate from avaliale
+Game factory - 
+    start - 
+        create Player
+        create computer 
+        create Gameboard - populate with predetermined coordinates
+    turn -
+        - hit -> calculte hit or not -> update ships/misses ->change Player
+    GameOver - 
+        if allSunked on Gamboard === true - other player is decleared winner
+            - display winner messege 
+            - end game loop
+HTML - 
+     sketch
+DOM - 
+    Start game - button - event listener - start game loop
+    reset - button - event listener - reset all changes
+    when game started 
+        in place of start game button - cooridnates input - set button - event listener - add coordinates to player ship
+        when no more ships - Begin button instead of set
+    player turn - 
+        indicator that player turn
+        forEach cell in computer board - add event listener onClick - check if hit or miss - upadte all logic
+        change display on hit or miss
+    comupter turn -
+        indicator computer turn
+        logic on hit and miss
+        change display based on computer hit or miss
+    endGame - 
+        if endGame - true 
+        display winner notation 
+    
+    
+
+
+
+
+
