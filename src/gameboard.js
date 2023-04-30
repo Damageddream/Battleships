@@ -47,11 +47,39 @@ export const gameboard = () => {
 
     //check if passed cords are allowed positionally
     const checkPlacement = () => {
-        const letters = []
-        if(coords[-1][0])
+        const letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+        let level = false;
+        let vertical = false;
+        if(coords[coords.length-1][0] === letters.findIndex(letter => letter === coords[0][0])+(coords.length-1)&&coords[0][1] === coords[coords.length-1][1]){
+            level = true
+        }
+        if(coords[0][0] === coords[coords.length-1][0]&&Number(coords[coords.length-1][1]) === Number(coords[0+(coords.length-1)][1])){
+            vertical = true
+        }
+        if(vertical || level){
+            return true
+        }
     }
 
+    const checkIfCellOccupied = ()=>{
+        for(const coord of coords){
+            if (occupiedCells.includes(coord)){
+                return false
+            }
+        }
+        return true
+    }   
 
+    // added Cell from coord and adjacent cells to occupied cells
+    const occupieCells = ()=> {
+        const regex = /[a-j](10|[0-9])/
+        const letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'] 
+        for(cell of coords){
+            const radius = [cell, `${}`]
+
+        }
+
+    }
   };
 
   return { board, placeShip, getplacedShips };
