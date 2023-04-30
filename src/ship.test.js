@@ -45,3 +45,15 @@ describe("checking if ship sinked after hits", () => {
     expect(destroyer.getSunk()).toBeTruthy();
   });
 });
+
+cruiser.setCoordinates(["a1", "a2", "a3"]);
+
+test("checking if can place coordinates", () => {
+  expect(cruiser.getCoordinates()).toEqual(["a1", "a2", "a3"]);
+});
+
+test("checking if errors is thrown when passed wrong number of coordinates", () => {
+  expect(() => {
+    destroyer.setCoordinates(["c4"]);
+  }).toThrow();
+});

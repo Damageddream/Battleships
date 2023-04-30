@@ -2,8 +2,8 @@ import { gameboard } from "./gameboard";
 
 const testGameboard = gameboard();
 
-test("check if board elements are unchanged", () => {
-  expect(gameboard.board).toEqual([
+test.only("check if board elements are unchanged", () => {
+  expect(testGameboard.board).toEqual([
     ["a1", "b1", "c1", "d1", "e1", "f1", "g1", "h1", "i1", "j1"],
     ["a2", "b2", "c2", "d2", "e2", "f2", "g2", "h2", "i2", "j2"],
     ["a3", "b3", "c3", "d3", "e3", "f3", "g3", "h3", "i3", "j3"],
@@ -17,14 +17,43 @@ test("check if board elements are unchanged", () => {
   ]);
 });
 
-test('check if placed ship is allowed', ()=>{
-    expect(gameboard.placeShip.placedShips({
-        submarine1: ['a1'],
-        submarine2: ['a3'],
-        destroyer1: ['c1','d1'],
-        destroyer2: ['f1', 'f2'],
-        cruiser: ['h1','i1','j1'],
-        battleship: ['a5','a6','a7','a8'],
-        aircraft: ['d8','e8','f8','g8','h8']
-    })).toEqual([])
+testGameboard.placeShip('submarine1',['a1'])
+
+test('checking if can place submarine', ()=>{
+    expect(testGameboard.placedships['submarine1'].toEqual(['a1']))
 })
+
+
+// test('checking if placing on the same cell throws error',()=>{
+//     expect(()=>{
+//         testGameboard.placeShip('submarine2',['a1'])
+//     }).toThrow();
+// })
+
+// test('checking if placing in connected cell with other ship throws error',()=>{
+//     expect(()=>{
+//         testGameboard.placeShip('submarine2',['a2'])
+//     }).toThrow();
+// })
+
+// test('checking if placing ship in disconnected cells throws error ',()=>{
+//     expect(()=>{
+//         testGameboard.placeShip('destroyer',['a4','i2'])
+//     }).toThrow();
+// })
+
+// test('checking if placing ship in not existing cell throws error',()=>{
+//     expect(()=>{
+//         testGameboard.placeShip('submarine2',['z2'])
+//     }).toThrow();
+// })
+
+// test('checking if placing ship that already been placed throws error',()=>{
+//     expect(()=>{
+//         testGameboard.placeShip('submarine1',['g8'])
+//     }).toThrow();
+// })
+
+// test('checking if ship has been placed',()=>{
+//     expect(testGameboard.placedships[0]['submarine1']).toEqual(['a1'])
+// })

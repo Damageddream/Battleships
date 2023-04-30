@@ -9,17 +9,31 @@ export const ship = (shipLength) => {
 
   //tracking number of hits to the ship
   let hitNumber = 0;
-//return number of hits
+  //return number of hits
   const getHits = () => hitNumber;
 
-  const hit = () => {  
+  const hit = () => {
     hitNumber++;
     if (hitNumber >= length()) {
       sunk = true;
-    }
-  };
+    }}
 
- 
+    const coordinates = [];
+    const setCoordinates = (coords) => {
+      if(coords.length !== length()){
+        throw new Error('number of coordinates have to be equal to length of the ship')
+      }
+      try{
+        coords.forEach((item) => {
+          coordinates.push(item);
+        });
+      }catch(error){
+        console.log(error)
+      }
 
-  return { length, getSunk, getHits, hit, };
+    };
+    const getCoordinates = () => coordinates;
+  
+
+  return { length, getSunk, getHits, hit, setCoordinates, getCoordinates };
 };

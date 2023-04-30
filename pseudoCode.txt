@@ -4,9 +4,11 @@ Ship factory -
     sunk - boolean/ sunked or not
     hit - increases number of hits
     isSunk - calculted 'sunk' based on lenght and number of history
+    coordinates - 
 Gameboard factory - 
     board - matrix of coordinates
     placeShip - (coordinates) - place ship on given coordinates
+    placedships - [{ship:[coordinates]}]
     receiveAttack - (coordinates) - determines if attack hit a ship and trigger hit method on hitted ship if any got hit else miss
     missedAttacks - array of coordinates that already been attacked and missed
     allSunked - if all ships have been sunk - report back
@@ -55,8 +57,8 @@ DOM -
 
 
 --placeShip--
-    ships: [['submarine1',1], ['submarine2'],1]....
-
+    ships: ['submarine1', 'submarine2']....
+    occupiedCells = []
     placedShips = []
 
     placeShip(ship, coordinates){
@@ -64,7 +66,7 @@ DOM -
             if ship in ships pop
         }
         else{
-            error = no such sip
+            error = ship already been placed or not exists
         }
         if - checkcoordinates(coordinates) true - 
             place ship
@@ -79,8 +81,18 @@ DOM -
     
     is on gameboard 
         regex - /[a-i][1-10]/
+        if not 
+            error - cooridnates out of scope of the board
     is allegable position 
         onLevel - coord end  ===  letters.findindex(coord[0])+shiplength&&start[1]===end[1]
         onVertical - start[0]===end[0]&&end[1]===start[1]+shiplength 
+        if vertcial and onLevel
+            true
+        else
+            error - not allowed position of ship
     is allegable to place
+        loop through coordinates
+            if any in occupiedCells
+                error - ship has to be 1 cell apart from other ships
+        placeShip
 
