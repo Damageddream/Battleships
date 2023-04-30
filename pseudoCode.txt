@@ -11,6 +11,7 @@ Gameboard factory -
     missedAttacks - array of coordinates that already been attacked and missed
     allSunked - if all ships have been sunk - report back
 Player factory - 
+
     turn - boolean 
     shoot - choose coordinater from avalible to shoot
 
@@ -52,4 +53,34 @@ DOM -
 
 
 
+
+--placeShip--
+    ships: [['submarine1',1], ['submarine2'],1]....
+
+    placedShips = []
+
+    placeShip(ship, coordinates){
+        for(ship of ships){
+            if ship in ships pop
+        }
+        else{
+            error = no such sip
+        }
+        if - checkcoordinates(coordinates) true - 
+            place ship
+        else - wrong placemant
+            place again
+    {}
+
+
+
+--checkcoordinates(ship, coordinates)
+    letters - [a-j]
+    
+    is on gameboard 
+        regex - /[a-i][1-10]/
+    is allegable position 
+        onLevel - coord end  ===  letters.findindex(coord[0])+shiplength&&start[1]===end[1]
+        onVertical - start[0]===end[0]&&end[1]===start[1]+shiplength 
+    is allegable to place
 
