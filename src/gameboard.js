@@ -15,6 +15,7 @@ export const gameboard = () => {
   ];
   //ships and coordinates of ships that already have been placed
   const placedShips = [];
+  const occupiedCells = [];
   const getplacedShips = () => placedShips;
   const ships = [
     "submarine1",
@@ -30,7 +31,7 @@ export const gameboard = () => {
   const placeShip = (shipType, coords) => {
 
     //list of cells that laready hav ships on them
-    const occupiedCells = [];
+   
     let shipName; 
     
     //checks if passed ship exists
@@ -47,7 +48,7 @@ export const gameboard = () => {
 
     //check if passed coord exists
     const checkCoordinates = () => {
-      const regex = /[a-j](10|[0-9])/;
+      const regex = /^[a-j](10|[1-9])$/;
       for (const coord of coords) {
         if (!regex.test(coord)) {
           return false;
@@ -97,7 +98,7 @@ export const gameboard = () => {
       for (let i = 0; i < coords.length; i++) {
         const coordLetter = coords[i][0];
         const coordNumber = coords[i][1];
-        const IndexInLetters = letters.find((letter) => letter === coordLetter);
+        const IndexInLetters = letters.indexOf(coords[i][0]);
         const radius = [
           coords[i],
           `${coordLetter}${Number(coordNumber) + 1}`,
@@ -119,12 +120,13 @@ export const gameboard = () => {
             `${letters[IndexInLetters + 1]}${Number(coordNumber) - 1}`
           );
         }
+       
         return radius;
       }
     };
     //filterting occupied cells from repeting cells and cells out of bound
     const filterOccupiedCells = (radius = addOccupiedCells()) => {
-      const regex = /[a-j](10|[0-9])/;
+      const regex = /^[a-j](10|[1-9])$/;
       for (const coord of radius) {
         if (regex.test(coord) && !occupiedCells.includes(coord)) {
           occupiedCells.push(coord);
@@ -133,9 +135,7 @@ export const gameboard = () => {
     };
 
     //checking ships and cords agains all dependecies 
-    if(!checkExistenceOfShip()){
-        throw new Error('Ship already been placed or not exists')
-    }
+
     if(!checkCoordinates()){
         throw new Error('Coordinates out of range of the board or not exists')
     }
@@ -143,18 +143,22 @@ export const gameboard = () => {
         throw new Error('Position of ship is not allowed')
     }
     if(!checkIfCellOccupied()){
-        throw new Error('You cannot place ship in one of chosen cells')
+        throw new Error('You cannot place ship in one ofalready occupied or adjecntes cells')
+    }
+    if(!checkExistenceOfShip()){
+        throw new Error('Ship already been placed or not exists')
     }
 
     //filterting occupied cells from repeting cells and cells out of bound
     filterOccupiedCells()
-    const newShip = ship(coords.length)
-    
+
+    //create new ship and passed correct cords
+    const newShip = ship(coords.length)  
     newShip.setCoordinates(coords)
-    console.log(shipName)
     placedShips.push({[`${shipName}`]:newShip})
+ 
 
   };
 
-  return { board, placeShip, getplacedShips };
+  return { board, placeShip, getplacedShips, };
 };

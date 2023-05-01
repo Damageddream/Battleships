@@ -1,6 +1,8 @@
 import { gameboard } from "./gameboard";
 
 const testGameboard = gameboard();
+testGameboard.placeShip("submarine1", ["a1"]);
+const placedShips = testGameboard.getplacedShips();
 
 test("check if board elements are unchanged", () => {
   expect(testGameboard.board).toEqual([
@@ -17,43 +19,47 @@ test("check if board elements are unchanged", () => {
   ]);
 });
 
+test("checki if can play ship that does not exists", () => {
+  expect(() => {
+    testGameboard.placeShip("motorboat", ["a5"]);
+  }).toThrow('Ship already been placed or not exists');
+});
 
-test('checking if can place submarine', ()=>{
-  testGameboard.placeShip('submarine1',['a1'])
-  const placedShips = testGameboard.getplacedShips()
+test("checking if can place submarine", () => {
+
+  expect(placedShips[0]["submarine1"].getCoordinates()).toEqual(["a1"]);
+});
+
+test("checking if placing on the same cell throws error", () => {
+  expect(() => {
+    testGameboard.placeShip("submarine2", ["a1"]);
+  }).toThrow('You cannot place ship in one ofalready occupied or adjecntes cells');
+});
+
+test("checking if placing in connected cell with other ship throws error", () => {
+  expect(() => {
+    testGameboard.placeShip("submarine2", ["a2"]);
+  }).toThrow('You cannot place ship in one ofalready occupied or adjecntes cells');
+});
+
+test("checking if placing ship in disconnected cells throws error ", () => {
+  expect(() => {
+    testGameboard.placeShip("destroyer", ["a4", "i2"]);
+  }).toThrow('Position of ship is not allowed');
+});
+
+test("checking if placing ship in not existing cell throws error", () => {
+  expect(() => {
+    testGameboard.placeShip("submarine2", ["z2"]);
+  }).toThrow('Coordinates out of range of the board or not exists');
+});
+
+test("checking if placing ship that already been placed throws error", () => {
+  expect(() => {
+    testGameboard.placeShip("submarine1", ["g8"]);
+  }).toThrow('Ship already been placed or not exists');
+});
+
+test('checking if ship has been placed',()=>{
     expect(placedShips[0]['submarine1'].getCoordinates()).toEqual(['a1'])
 })
-
-test('checking if placing on the same cell throws error',()=>{
-    expect(()=>{
-        testGameboard.placeShip('submarine2',['a1'])
-    }).toThrow();
-})
-
-test('checking if placing in connected cell with other ship throws error',()=>{
-    expect(()=>{
-        testGameboard.placeShip('submarine2',['a2'])
-    }).toThrow();
-})
-
-test('checking if placing ship in disconnected cells throws error ',()=>{
-    expect(()=>{
-        testGameboard.placeShip('destroyer',['a4','i2'])
-    }).toThrow();
-})
-
-test('checking if placing ship in not existing cell throws error',()=>{
-    expect(()=>{
-        testGameboard.placeShip('submarine2',['z2'])
-    }).toThrow();
-})
-
-test('checking if placing ship that already been placed throws error',()=>{
-    expect(()=>{
-        testGameboard.placeShip('submarine1',['g8'])
-    }).toThrow();
-})
-
-// test('checking if ship has been placed',()=>{
-//     expect(testGameboard.placedships[0]['submarine1']).toEqual(['a1'])
-// })
