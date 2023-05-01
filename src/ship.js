@@ -35,5 +35,5 @@ export const ship = (shipLength) => {
     const getCoordinates = () => coordinates;
   
 
-  return { length, getSunk, getHits, hit, setCoordinates, getCoordinates };
+  return { length, getSunk, getHits, hit, setCoordinates, getCoordinates,coordinates};
 };

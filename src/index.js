@@ -9,4 +9,4 @@ try {
 
 
 const a = board.getplacedShips()
-console.log(a[0].submarine1.getCoordinates())
+console.log(a[0])
