@@ -63,3 +63,14 @@ test("checking if placing ship that already been placed throws error", () => {
 test('checking if ship has been placed',()=>{
     expect(placedShips[0]['submarine1'].getCoordinates()).toEqual(['a1'])
 })
+
+test('checking if shot that missed is tracked', ()=>{
+  expect(testGameboard.receiveAttack('a5')).toBeFalsy()
+})
+test('checking if shot that hits is returns hitted ship', ()=>{
+  expect(testGameboard.receiveAttack('a1').coordinates).toEqual(["a1"])
+})
+
+test('checking if tracks when all ships sunked', ()=>{
+  expect(testGameboard.allShipsSunked()).toBeTruthy()
+})

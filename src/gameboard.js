@@ -15,8 +15,13 @@ export const gameboard = () => {
   ];
   //ships and coordinates of ships that already have been placed
   const placedShips = [];
-  const occupiedCells = [];
   const getplacedShips = () => placedShips;
+  // cells that have ships on them or are adjcentes to ships
+  const occupiedCells = [];
+  // tracking cells that been shot and were miss
+  const missedShots = [];
+  const getMissedShots = () => missedShots;
+
   const ships = [
     "submarine1",
     "submarine2",
@@ -29,16 +34,15 @@ export const gameboard = () => {
 
   //checking if coordinates are allowed and placing ships in placedShips
   const placeShip = (shipType, coords) => {
-
     //list of cells that laready hav ships on them
-   
-    let shipName; 
-    
+
+    let shipName;
+
     //checks if passed ship exists
     const checkExistenceOfShip = () => {
       for (const item of ships) {
         if (shipType === item) {
-            shipName = shipType
+          shipName = shipType;
           ships.splice(ships.indexOf(item), 1);
           return true;
         }
@@ -62,12 +66,14 @@ export const gameboard = () => {
       const letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"];
       let level = false;
       let vertical = false;
+      console.log(coords[0][0], coords[coords.length - 1][0])
       if (
         coords[coords.length - 1][0] ===
           letters.findIndex((letter) => letter === coords[0][0]) +
             (coords.length - 1) &&
         coords[0][1] === coords[coords.length - 1][1]
       ) {
+        console.log('level')
         level = true;
       }
       if (
@@ -75,12 +81,13 @@ export const gameboard = () => {
         Number(coords[coords.length - 1][1]) ===
           Number(coords[0 + (coords.length - 1)][1])
       ) {
+       console.log('vertical')
         vertical = true;
       }
       if (vertical || level) {
         return true;
       }
-      return false
+      return false;
     };
 
     const checkIfCellOccupied = () => {
@@ -120,7 +127,7 @@ export const gameboard = () => {
             `${letters[IndexInLetters + 1]}${Number(coordNumber) - 1}`
           );
         }
-       
+
         return radius;
       }
     };
@@ -134,31 +141,65 @@ export const gameboard = () => {
       }
     };
 
-    //checking ships and cords agains all dependecies 
+    //checking ships and cords agains all dependecies
 
-    if(!checkCoordinates()){
-        throw new Error('Coordinates out of range of the board or not exists')
+    if (!checkCoordinates()) {
+      throw new Error("Coordinates out of range of the board or not exists");
     }
-    if(!checkPlacement()){
-        throw new Error('Position of ship is not allowed')
+    if (!checkPlacement()) {
+      throw new Error("Position of ship is not allowed");
     }
-    if(!checkIfCellOccupied()){
-        throw new Error('You cannot place ship in one ofalready occupied or adjecntes cells')
+    if (!checkIfCellOccupied()) {
+      throw new Error(
+        "You cannot place ship in one ofalready occupied or adjecntes cells"
+      );
     }
-    if(!checkExistenceOfShip()){
-        throw new Error('Ship already been placed or not exists')
+    if (!checkExistenceOfShip()) {
+      throw new Error("Ship already been placed or not exists");
     }
 
     //filterting occupied cells from repeting cells and cells out of bound
-    filterOccupiedCells()
+    filterOccupiedCells();
 
     //create new ship and passed correct cords
-    const newShip = ship(coords.length)  
-    newShip.setCoordinates(coords)
-    placedShips.push({[`${shipName}`]:newShip})
- 
-
+    const newShip = ship(coords.length);
+    newShip.setCoordinates(coords);
+    placedShips.push({ [`${shipName}`]: newShip });
   };
 
-  return { board, placeShip, getplacedShips, };
+  // takes coord that was shot, checks if ship was hit and tracks it, if miss pushes coord to missed shots array
+  const receiveAttack = (attackCoord) => {
+    for (let i = 0; i < placedShips.length; i++) {
+      const shipCoords = Object.values(placedShips[i])[0].coordinates;
+      for (const shipCoord of shipCoords) {
+        if (shipCoord === attackCoord) {
+          const hitShip = Object.values(placedShips[i])[0];
+          hitShip.hit();
+          return hitShip;
+        }
+      }
+    }
+    missedShots.push(attackCoord);
+    return false;
+  };
+
+  // checks if all ships have been sunk
+  const allShipsSunked = () => {
+    for (let i = 0; i < placedShips.length; i++) {
+      const inspectedShip = Object.values(placedShips[i])[0];
+      if (inspectedShip.getSunk() === false) {
+        return false;
+      }
+    }
+    return true;
+  };
+
+  return {
+    board,
+    placeShip,
+    getplacedShips,
+    getMissedShots,
+    receiveAttack,
+    allShipsSunked,
+  };
 };

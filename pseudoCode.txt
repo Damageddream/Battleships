@@ -13,12 +13,16 @@ Gameboard factory -
     missedAttacks - array of coordinates that already been attacked and missed
     allSunked - if all ships have been sunk - report back
 Player factory - 
-
+    playergameboard - instance of gameboard
+    shoot  - takes coord and enemygameboard, and triggers reveive attacks on enemy board
     turn - boolean 
     shoot - choose coordinater from avalible to shoot
 
     Computer factory - 
-        shoot - choose random coordinate from avaliale
+    inharites from player
+        avaliableCoordToTarget = array of all coords
+        shoot - choose random index from avaliable and hit enemy board and splice index from avaliable coords
+        chooseTarget - choose random coord from avaliable
 Game factory - 
     start - 
         create Player
