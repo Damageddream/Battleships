@@ -40,8 +40,22 @@ export const computer = () => {
 
     //takes shot at enemy board with coord from chooseTarget() and removes that coord from availiable coords
     const shootComp = (enemyBoard, coord = chooseTarget()) => {
+        console.log(avaliableCoordToTarget[coord])
         enemyBoard.receiveAttack(avaliableCoordToTarget[coord])
         avaliableCoordToTarget.splice(coord, 1)
+    }
+
+    const placeShips = ()=>{
+        const ships = {
+            "submarine1": {1:['a1'],
+        2:['a4'], 3:['a6']},
+            "submarine2": 1,
+            "destroyer1": 2,
+            "destroyer2": 2,
+            "cruiser": 3,
+            "battleship": 4,
+            "aircraftCarrier": 5,
+        }
     }
 
 

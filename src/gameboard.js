@@ -66,14 +66,12 @@ export const gameboard = () => {
       const letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"];
       let level = false;
       let vertical = false;
-      console.log(coords[0][0], coords[coords.length - 1][0])
       if (
         coords[coords.length - 1][0] ===
-          letters.findIndex((letter) => letter === coords[0][0]) +
-            (coords.length - 1) &&
+        letters[letters.findIndex((letter) => letter === coords[0][0]) +
+            (coords.length - 1)] &&
         coords[0][1] === coords[coords.length - 1][1]
       ) {
-        console.log('level')
         level = true;
       }
       if (
@@ -81,7 +79,6 @@ export const gameboard = () => {
         Number(coords[coords.length - 1][1]) ===
           Number(coords[0 + (coords.length - 1)][1])
       ) {
-       console.log('vertical')
         vertical = true;
       }
       if (vertical || level) {
@@ -170,6 +167,7 @@ export const gameboard = () => {
   // takes coord that was shot, checks if ship was hit and tracks it, if miss pushes coord to missed shots array
   const receiveAttack = (attackCoord) => {
     for (let i = 0; i < placedShips.length; i++) {
+      
       const shipCoords = Object.values(placedShips[i])[0].coordinates;
       for (const shipCoord of shipCoords) {
         if (shipCoord === attackCoord) {
@@ -201,5 +199,6 @@ export const gameboard = () => {
     getMissedShots,
     receiveAttack,
     allShipsSunked,
+    placedShips,
   };
 };
