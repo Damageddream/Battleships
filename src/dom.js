@@ -47,17 +47,20 @@ export const submitHandler = () => {
     const form = document.querySelector('form')
     const submitForm = (board)=>{form.addEventListener('submit', (e) => {
         e.preventDefault()
-        const coordStart = e.target[0].value.trim().toLowerCase()
-        const coordEnd = e.target[1].value.trim().toLowerCase()
-        const coords = makeCoords(coordStart, coordEnd, ships[0][1])
-        try{
-            board.placeShip(ships[0][0], coords)
-            ships.shift()
-            legend.textContent = `${ships[0][0]} with length of ${ships[0][1]}`
-        }
-        catch(error){
-            console.log(error)
-        }
+            const coordStart = e.target[0].value.trim().toLowerCase()
+            const coordEnd = e.target[1].value.trim().toLowerCase()
+            const coords = makeCoords(coordStart, coordEnd, ships[0][1])
+            try{
+                board.placeShip(ships[0][0], coords)
+                ships.shift()
+                legend.textContent = `${ships[0][0]} with length of ${ships[0][1]}`
+                if(ships.length <= 0){
+                    
+                }
+            }
+            catch(error){
+                console.log(error)
+            }    
 
     })}
     return {submitForm}
