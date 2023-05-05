@@ -1,38 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Battleship</title>
-    <link rel="stylesheet" href="style.css" />
-    <script src="main.js" defer></script>
-  </head>
-  <body>
-    <div class="container">
-      <div class="header">Battleship</div>
-      <div class="menu">
-        <form>
-          <legend></legend>
-          <div class="shiptype">submarine1 length: 1</div>
-          <label for="coord1">set start coord</label>
-          <input type="text" name="coord1" id="coord1">
-          <label for="coord2">set end coord</label>
-          <input type="text" name="coord2" id="coord2">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Battleship</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Quantico&display=swap" rel="stylesheet">
+  <script src="main.js" defer></script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">Battleship</div>
+    <div class="winner"></div>
+    <div class="menu">
+      <form>
+        <legend>Place your ship</legend>
+        <div class="shiptype">submarine1 <span>length: 1</span></div>
+        <div class="inputs">
+          <div>
+            <label for="coord1">set start coord:</label>
+            <input type="text" name="coord1" id="coord1">
+          </div>
+          <div>
+            <label for="coord2">set end coord:</label>
+            <input type="text" name="coord2" id="coord2">
+          </div>
           <button class="btn submit" type="submit">Place ship</button>
-        </form>
-        <div class="navigation">
-          <button class="btn start">Start game</button>
-          <button class="btn reset">reset</button>
         </div>
+      </form>
+      <div class="error"></div>
+      <div class="navigation">
+        <button class="btn start">Start game</button>
+        <button class="btn reset">reset</button>
       </div>
-      <div class="main">
+    </div>
+    <div class="main">
+      <div class="player">
         <div class="playername">Player</div>
         <div class="playerboard"></div>
+      </div>
+      <div class="computer">
         <div class="computername">Computer</div>
         <div class="computerboard"></div>
       </div>
-      <div class="footer">@DamagedDream 2023</div>
     </div>
-  </body>
+    <div class="footer">@DamagedDream 2023</div>
+  </div>
+</body>
+
 </html>

@@ -1,11 +1,5 @@
-import { player, computer } from "./player";
-import { createBoard, clickHandlerCoords, submitHandler} from "./dom";
+import { game } from "./game";
 
-const Player1 = player()
-const Computer = computer()
 
-createBoard('player')
-clickHandlerCoords('player')
+game()
 
-const submit = submitHandler()
-submit.submitForm(Player1.board)

@@ -1,12 +1,12 @@
 import { ship } from "./ship";
 import { makeCoords } from "./utilities";
+import { formValidation } from "./utilities";
+import { game, } from "./game";
 
 //creating grid 10x10 with rows 1-10 and columns a-j, setting every data sett of cell to match coordinates
 export const createBoard = (player) => {
     const letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"];
     const playerBoard = document.querySelector(`.${player}` + 'board')
-    console.log(playerBoard)
-
     letters.forEach(letter => {
         const divContainer = document.createElement('div')
         divContainer.classList.add(`column`)
@@ -23,12 +23,26 @@ export const createBoard = (player) => {
     })
 }
 
-export const clickHandlerCoords = (player) => {
-    const allCells = document.querySelectorAll(`.${player}` + 'cell')
+export const clickHandlerCoords = (name, player, selfTurn) => {
+    const allCells = document.querySelectorAll(`.${name}` + 'cell')
     allCells.forEach(cell => {
         cell.addEventListener('click', () => {
-            console.log(cell)
-        })
+            const hitShip = player.board.receiveAttack(cell.dataset.coordinates)
+            if(hitShip){
+                markHit(cell)
+                if(hitShip.getSunk()){
+                    if(player.board.allShipsSunked()){
+                        declareWinner(name)
+                    }
+                }
+                
+            }
+            else{
+                markMiss(cell)
+            }
+            player.changeTurn()
+            selfTurn.changeTurn()
+        }, {once: true})
     })
 }
 
@@ -42,27 +56,103 @@ export const submitHandler = () => {
         ["battleship", 4,],
         ["aircraftCarrier", 5],
     ]
-    const legend = document.querySelector('legend')
+    const legend = document.querySelector('.shiptype')
+
     legend.textContent = `${ships[0][0]} with length of ${ships[0][1]}`
     const form = document.querySelector('form')
-    const submitForm = (board)=>{form.addEventListener('submit', (e) => {
-        e.preventDefault()
+    const submitForm = (board) => {
+        form.addEventListener('submit', (e) => {
+            e.preventDefault()
+            resetError()
             const coordStart = e.target[0].value.trim().toLowerCase()
             const coordEnd = e.target[1].value.trim().toLowerCase()
             const coords = makeCoords(coordStart, coordEnd, ships[0][1])
-            try{
+            try {
+                formValidation(coordStart)
+                formValidation(coordEnd)
+                markPlacedShip(coords)
                 board.placeShip(ships[0][0], coords)
                 ships.shift()
-                legend.textContent = `${ships[0][0]} with length of ${ships[0][1]}`
-                if(ships.length <= 0){
-                    
+                if (ships.length <= 0) {
+                    shipsHasBennPlaced()
                 }
-            }
-            catch(error){
+                else{
+                    legend.textContent = `${ships[0][0]} with length of ${ships[0][1]}`
+                }
+                
+            } 
+            catch (error) {
                 console.log(error)
-            }    
+                displayError(error.message)
+            }
 
-    })}
-    return {submitForm}
+        })
+    }
+    return { submitForm }
 }
 
+const displayError = error => {
+    const errorDiv = document.querySelector('.error')
+    errorDiv.style.display = 'block'
+    errorDiv.textContent = error
+}
+
+const resetError = () => {
+    const errorDiv = document.querySelector('.error')
+    errorDiv.style.display = 'none'
+}
+
+const markPlacedShip = (coords) => {
+    for (const coord of coords) {
+        const divCoord = document.querySelector(`.playercell[data-coordinates='${coord}']`)
+        divCoord.classList.add('placed')
+
+    }
+}
+
+const shipsHasBennPlaced = () => {
+    const form = document.querySelector('form')
+    const startBtn = document.querySelector('.start')
+
+    form.style.display = 'none'
+    startBtn.style.display = 'block'
+}
+
+const markHit = element => {
+    element.classList.add('hit')
+}
+const markMiss = (element) => {
+    element.classList.add('miss')
+}
+
+export const declareWinner = (winner) => {
+    const winnerDiv = document.querySelector('.winner')
+    winnerDiv.style.display = 'block'
+    let winnerName;
+    if(winner==='computer'){
+        winnerName = 'Player1'
+    }
+    else{
+        winnerName = 'Computer'
+    }
+    winnerDiv.textContent = `${winnerName}`
+}
+
+export const startGame = (callback)=>{
+    const start = document.querySelector('.start')
+
+    start.addEventListener('click',()=>{
+        callback()
+    })
+}
+
+export const reset = () => {
+    const reset = document.querySelector('.reset')
+    const playerboard = document.querySelector('.playerboard')
+    const compboard = document.querySelector('.computerboard')
+    reset.addEventListener('click',()=>{
+        playerboard.innerHTML = ''
+        compboard.innerHTML = ''
+        game()
+    })
+}
