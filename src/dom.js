@@ -1,6 +1,4 @@
-import { ship } from "./ship";
-import { makeCoords } from "./utilities";
-import { formValidation } from "./utilities";
+import { makeCoords, formValidation, computerTurn } from "./utilities";
 import { game, } from "./game";
 
 //creating grid 10x10 with rows 1-10 and columns a-j, setting every data sett of cell to match coordinates
@@ -42,6 +40,7 @@ export const clickHandlerCoords = (name, player, selfTurn) => {
             }
             player.changeTurn()
             selfTurn.changeTurn()
+            computerTurn(player, selfTurn)
         }, {once: true})
     })
 }

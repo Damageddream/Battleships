@@ -114,6 +114,7 @@ input:focus {
 
 .hit {
     background-color: black;
+    color: white;
 }
 
 .miss {
