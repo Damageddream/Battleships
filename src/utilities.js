@@ -40,8 +40,9 @@ export const computerTurn = (computer, enemy) => {
         }
         else {
             divCoord.classList.add('miss')
+            computer.changeTurn()
+            enemy.changeTurn()
         }
-        computer.changeTurn()
-        enemy.changeTurn()
+      
     }
 }

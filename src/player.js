@@ -129,8 +129,11 @@ export const computer = () => {
     //takes shot at enemy board with coord from chooseTarget() and removes that coord from availiable coords
     const shootComp = (enemyBoard, coord = chooseTarget()) => {
         const hitShip =  enemyBoard.receiveAttack(avaliableCoordToTarget[coord]);
+        const hitCoord = avaliableCoordToTarget[coord]
+        console.log(avaliableCoordToTarget[coord])
         avaliableCoordToTarget.splice(coord, 1);
-        return [hitShip, avaliableCoordToTarget[coord]]
+        
+        return [hitShip, hitCoord]
     };
 
 
