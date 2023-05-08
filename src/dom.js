@@ -37,10 +37,11 @@ export const clickHandlerCoords = (name, player, selfTurn) => {
             }
             else{
                 markMiss(cell)
+                player.changeTurn()
+                selfTurn.changeTurn()
+                computerTurn(player, selfTurn)
             }
-            player.changeTurn()
-            selfTurn.changeTurn()
-            computerTurn(player, selfTurn)
+
         }, {once: true})
     })
 }
@@ -127,21 +128,23 @@ const markMiss = (element) => {
 export const declareWinner = (winner) => {
     const winnerDiv = document.querySelector('.winner')
     winnerDiv.style.display = 'block'
+    // const main = document.querySelector('.main')
     let winnerName;
     if(winner==='computer'){
-        winnerName = 'Player1'
+        winnerName = 'Winner is Player1'
     }
     else{
-        winnerName = 'Computer'
+        winnerName = 'Winner is Computer'
     }
     winnerDiv.textContent = `${winnerName}`
+    // main.replaceWith(main.cloneNode(true))
 }
 
-export const startGame = (callback)=>{
+export const startGame = (callback, name, computer, player)=>{
     const start = document.querySelector('.start')
 
     start.addEventListener('click',()=>{
-        callback()
+        callback(name, computer, player)
     })
 }
 
@@ -149,9 +152,15 @@ export const reset = () => {
     const reset = document.querySelector('.reset')
     const playerboard = document.querySelector('.playerboard')
     const compboard = document.querySelector('.computerboard')
+    const form = document.querySelector('form')
+    const startBtn = document.querySelector('.start')
+    const winnerDiv = document.querySelector('.winner')
     reset.addEventListener('click',()=>{
+        winnerDiv.style.display = 'none'
         playerboard.innerHTML = ''
         compboard.innerHTML = ''
+        form.style.display = 'block'
+        startBtn.style.display = 'none'
         game()
     })
 }

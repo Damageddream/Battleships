@@ -32,12 +32,13 @@ export const computerTurn = (computer, enemy) => {
         const divCoord = document.querySelector(`.playercell[data-coordinates='${coord}']`)
         if (hitShip[0]) {
             divCoord.classList.add('hit')
-            if (hitShip.getSunk()) {
+            if (hitShip[0].getSunk()) {
                 if (enemy.board.allShipsSunked()) {
                     declareWinner('player')
                 }
             }
-        }
+            computerTurn(computer, enemy)
+        }   
         else {
             divCoord.classList.add('miss')
             computer.changeTurn()

@@ -130,7 +130,6 @@ export const computer = () => {
     const shootComp = (enemyBoard, coord = chooseTarget()) => {
         const hitShip =  enemyBoard.receiveAttack(avaliableCoordToTarget[coord]);
         const hitCoord = avaliableCoordToTarget[coord]
-        console.log(avaliableCoordToTarget[coord])
         avaliableCoordToTarget.splice(coord, 1);
         
         return [hitShip, hitCoord]
