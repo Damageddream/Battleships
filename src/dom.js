@@ -21,6 +21,7 @@ export const createBoard = (player) => {
     })
 }
 
+// adds event listener for computer board, watches for player turn changes, checks if ships sunk or all ships sunk
 export const clickHandlerCoords = (name, player, selfTurn) => {
     const allCells = document.querySelectorAll(`.${name}` + 'cell')
     allCells.forEach(cell => {
@@ -46,6 +47,7 @@ export const clickHandlerCoords = (name, player, selfTurn) => {
     })
 }
 
+//creates form for every ship to place, validates data, throws error if needed
 export const submitHandler = () => {
     const ships = [
         ["submarine1", 1,],
@@ -91,6 +93,8 @@ export const submitHandler = () => {
     return { submitForm }
 }
 
+//errors display functions 
+
 const displayError = error => {
     const errorDiv = document.querySelector('.error')
     errorDiv.style.display = 'block'
@@ -109,7 +113,7 @@ const markPlacedShip = (coords) => {
 
     }
 }
-
+// changes ui, after all ships of player have been placed, to start game
 const shipsHasBennPlaced = () => {
     const form = document.querySelector('form')
     const startBtn = document.querySelector('.start')
@@ -125,10 +129,11 @@ const markMiss = (element) => {
     element.classList.add('miss')
 }
 
+
+//if there is a winner update UI to show winner
 export const declareWinner = (winner) => {
     const winnerDiv = document.querySelector('.winner')
     winnerDiv.style.display = 'block'
-    // const main = document.querySelector('.main')
     let winnerName;
     if(winner==='computer'){
         winnerName = 'Winner is Player1'
@@ -137,7 +142,6 @@ export const declareWinner = (winner) => {
         winnerName = 'Winner is Computer'
     }
     winnerDiv.textContent = `${winnerName}`
-    // main.replaceWith(main.cloneNode(true))
 }
 
 export const startGame = (callback, name, computer, player)=>{
@@ -148,6 +152,8 @@ export const startGame = (callback, name, computer, player)=>{
     })
 }
 
+
+//reset all of UI to defualt 
 export const reset = () => {
     const reset = document.querySelector('.reset')
     const playerboard = document.querySelector('.playerboard')

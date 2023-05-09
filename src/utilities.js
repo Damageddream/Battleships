@@ -25,6 +25,7 @@ export const formValidation = (value) => {
 
 }
 
+// checks if computer turns then makes shot at enemy board, marks cell, if hit recursrivly triggers computern turn. 
 export const computerTurn = (computer, enemy) => {
     if (computer.getTurn()) {
         const hitShip = computer.shootComp(enemy.board)
